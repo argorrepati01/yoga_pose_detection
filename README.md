@@ -24,9 +24,15 @@ For these reasons, CSI has become a foundational element in non-intrusive sensin
 
 ## Data Collection
 
-We have conducted the experiments using a pair of ESP32 as both transmitter and receiver, placed at a distance of 10 feet, with the subject performing the yoga pose in between them. Four subjects aged 20-30 have performed five different yoga poses, each 100 times holding the pose for 5 seconds. A total data of 400 samples for each pose is recorded. The data is collected using the ESPRESSIF CSI toolkit in the form of .csv files. The tool can capture up to 64 subcarrier data, which correspond to 64 amplitude and phase values. 
+We have conducted the experiments using a pair of ESP32 as both transmitter and receiver, placed at a distance of 10 feet, with the subject performing the yoga pose in between them. Four subjects aged 20-30 have performed five different yoga poses, each 100 times holding the pose for 5 seconds. A total data of 400 samples for each pose is recorded. The data is collected using the ESPRESSIF CSI toolkit in the form of .csv files. The tool can capture up to 64 subcarrier data, which correspond to 64 amplitude and phase values. The CSV file contains RSSI, Timestamp, Mac Address, Length, CSI, etc values as columns and packets (corresponding to time) as rows. Here, we focus more on CSI values.
 
 ## Data Preprocessing
+
+From the .csv file, we get the CSI column which has 128 values, these are 64 pairs of real and imaginary values that correspond to 64 pairs of amplitude and phase values. They are extracted using the below formula,
+- Amplitude formula: `|H| = sqrt(real^2 + imaginary^2)`
+- Phase formula: `theta = arctan(imaginary/real)`
+
+After extracting the amplitude and phase values, we need to preprocess the data, to remove outliers and noise added to it. In signal processing, we use filters such as Hampel, Bandpass, Kalman, Savitzky-Golay, etc for filtering out the noise and outlier removal. A combination of SG and Hampel filters is used for preprocessing the signal data.
 
 
 
