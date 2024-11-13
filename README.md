@@ -34,5 +34,10 @@ From the .csv file, we get the CSI column which has 128 values, these are 64 pai
 
 After extracting the amplitude and phase values, we need to preprocess the data, to remove outliers and noise added to it. In signal processing, we use filters such as Hampel, Bandpass, Kalman, Savitzky-Golay, etc for filtering out the noise and outlier removal. A combination of SG and Hampel filters is used for preprocessing the signal data.
 
+<p float="left">
+  <img src="images/raw.png" width="45%" />
+  <img src="images/filtered.png" width="45%" />
+</p>
+git
 
 
