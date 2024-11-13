@@ -1,1 +1,1 @@
-# yoga_pose_detection
+# Yoga Pose Recognition using WiFi Sensing
