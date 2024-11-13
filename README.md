@@ -2,7 +2,7 @@
 
 ![wifi](https://github.com/user-attachments/assets/0eaae8ce-e14a-4f1b-8377-e96215ddd412)
 
-Traditional methods of recognizing human poses, such as cameras and wearable sensors, often raise concerns around privacy, cost, and comfort, particularly in sensitive environments like personal fitness. Yoga pose recognition, which is gaining popularity as people turn to digital fitness solutions, faces these limitations as users may be reluctant to use cameras for continuous monitoring during practice. Additionally, wearable devices can interfere with movements and require frequent maintenance.
+Traditional methods of recognizing human poses, such as cameras and wearable sensors, often raise concerns around privacy, cost, and comfort, particularly in sensitive environments like personal fitness. Yoga poses recognition, gaining popularity as people turn to digital fitness solutions, faces these limitations as users may be reluctant to use cameras for continuous monitoring during practice. Additionally, wearable devices can interfere with movements and require frequent maintenance.
 
 ## Objective
 
@@ -24,7 +24,8 @@ For these reasons, CSI has become a foundational element in non-intrusive sensin
 
 ## Data Collection
 
-We have conducted the experiments using a pair of ESP32 as both transmitter and receiver, placed at a distance of 10 feet, with the subject performing the yoga pose in between them. Four subjects aged 20-30 have performed five different yoga poses, each 100 times holding the pose for 5 seconds. A total data of 400 samples for each pose is recorded. The data is collected using the ESPRESSIF CSI toolkit in the form of .csv files. The tool can capture up to 64 subcarrier data, which correspond to 64 amplitude and phase values. The CSV file contains RSSI, Timestamp, Mac Address, Length, CSI, etc values as columns and packets (corresponding to time) as rows. Here, we focus more on CSI values.
+We have conducted the experiments using a pair of ESP32 as both transmitter and receiver, placed at a distance of 10 feet, with the subject performing the yoga pose in between them. Four subjects aged 20-30 have performed five different yoga poses, each 100 times holding the pose for 5 seconds. The subjects per-
+formed seven different yoga poses: Pose A: Uttanasana(Forward bend), Pose B: Virabhadrasana(Warrior pose right and left side), Pose C: Trikonasana(Triangle pose right and left side), Pose D: Vajrasana(Sit), and Pose E: Tadasana(Backward Bend). A total data of 400 samples for each pose is recorded. The data is collected using the ESPRESSIF CSI toolkit in the form of .csv files. The tool can capture up to 64 subcarrier data, which correspond to 64 amplitude and phase values. The CSV file contains RSSI, Timestamp, Mac Address, Length, CSI, etc values as columns and packets (corresponding to time) as rows. Here, we focus more on CSI values.
 
 ## Data Preprocessing
 
@@ -38,6 +39,32 @@ After extracting the amplitude and phase values, we need to preprocess the data,
   <img src="images/raw.png" width="45%" />
   <img src="images/filtered.png" width="45%" />
 </p>
-git
 
+## Data Visualization
+
+Once the signal is processed, we plot the amplitude vs. time graph for each pose, using Matplotlib. We observed that each pose has a unique noticeable pattern.
+
+<p float="left">
+  <img src="images/forwardbend.png" width="45%" />
+  <img src="images/backwardbend.png" width="45%" />
+</p>
+
+<p float="left">
+  <img src="images/warriorpose.png" width="45%" />
+  <img src="images/trianglepose.png" width="45%" />
+</p>
+
+<p float="center">
+  <img src="images/vajrasan.png" width="45%" />
+</p>
+
+
+## Feature Extraction
+From the preprocessed Channel State Information(CSI) data, a variety of statistical features were extracted to capture the characteristics of the various yoga poses. These features included minimum, maximum, mean, variance, skewness, kurtosis, IQR range, etc.
+ 
+## Machine Learning Implementation
+The visual analysis confirmed that certain features exhibited distinct patterns for each pose, facilitating the feature selection process for machine learning (ML) models. For the classification of yoga poses, several machine-learning algorithms were evaluated, including K Nearest Neighbour(KNN), Random Forest, Gradient Boosting, Xtreme Gradient Boosting, Decision trees, AdaBoosting, and Logistic Regression. After preliminary evaluations, the Random Forest model demonstrated superior performance in terms of accuracy and robustness. The hyperparameters were selected based on low bias and low variance, ensuring the model is generalized to new data.
+
+## Conclusion
+Considering the accuracy and F1 score metrics, the best performance model Random Forest showed an accuracy of 92% with an F1 score of 0.90. Using a two-stage machine learning model, we can even classify the pose and direction.
 
